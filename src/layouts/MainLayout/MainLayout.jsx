@@ -1,16 +1,14 @@
 import { Outlet } from "react-router-dom";
+import ClientFooter from "./ClientFooter";
+import ClientHeader from "./ClientHeader";
 
 const MainLayout = () => {
   return (
-    <>
-      <header>Client header</header>
+    <div className="site-wrap">
+      <Outlet />
 
-      <main>
-        <Outlet />
-      </main>
-
-      <footer>Client footer</footer>
-    </>
+      <ClientFooter />
+    </div>
   );
 };
 
