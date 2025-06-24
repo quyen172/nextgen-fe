@@ -1,7 +1,8 @@
+import classNames from "classnames";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-const ClientHeader = () => {
+const ClientHeader = ({ lightMode = true }) => {
   return (
     <>
       <div className="site-mobile-menu">
@@ -17,7 +18,13 @@ const ClientHeader = () => {
       <div className="site-navbar-wrap">
         <div className="site-navbar">
           <div className="container tw-py-6 tw-flex tw-items-center tw-justify-between">
-            <Link to="/" className="!tw-text-white tw-text-4xl tw-font-normal">
+            <Link
+              to="/"
+              className={classNames("tw-text-4xl tw-font-normal", {
+                "!tw-text-white": lightMode,
+                "!tw-text-[#212121]": !lightMode,
+              })}
+            >
               Interior
             </Link>
 
@@ -28,42 +35,88 @@ const ClientHeader = () => {
               <input
                 type="text"
                 placeholder="Search"
-                className="tw-bg-transparent tw-border-none tw-outline-none tw-flex-1 tw-px-2 tw-text-white [&::placeholder]:tw-text-gray-[#BDBDBD]"
+                className={classNames(
+                  "tw-bg-transparent tw-border-none tw-outline-none tw-flex-1 tw-px-2 [&::placeholder]:tw-text-gray-[#BDBDBD]",
+                  {
+                    "tw-text-white": lightMode,
+                    "tw-text-[#212121]": !lightMode,
+                  }
+                )}
               />
 
-              <div className="tw-text-white tw-self-center tw-mx-4">
+              <div
+                className={classNames("tw-self-center tw-mx-4", {
+                  "!tw-text-white": lightMode,
+                  "!tw-text-[#212121]": !lightMode,
+                })}
+              >
                 <i className="fa-solid fa-magnifying-glass"></i>
               </div>
             </form>
 
-            <ul className="tw-flex tw-items-center tw-gap-6 tw-list-none tw-m-0">
+            <ul
+              className={classNames(
+                "tw-flex tw-items-center tw-gap-6 tw-list-none tw-m-0",
+                {
+                  "tw-text-white": lightMode,
+                  "tw-text-[#212121]": !lightMode,
+                }
+              )}
+            >
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink className="!tw-text-[inherit]" to="/">
+                  Home
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/about">About Us</NavLink>
+                <NavLink className="!tw-text-[inherit]" to="/about">
+                  About Us
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/projects">Projects</NavLink>
+                <NavLink className="!tw-text-[inherit]" to="/projects">
+                  Projects
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/news">News</NavLink>
+                <NavLink className="!tw-text-[inherit]" to="/news">
+                  News
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/contact">Contact</NavLink>
+                <NavLink className="!tw-text-[inherit]" to="/contact">
+                  Contact
+                </NavLink>
               </li>
             </ul>
 
             <div className="tw-flex tw-items-center tw-gap-6">
-              <div className="tw-text-white tw-text-xl">
+              <div
+                className={classNames("tw-text-xl", {
+                  "!tw-text-white": lightMode,
+                  "!tw-text-[#212121]": !lightMode,
+                })}
+              >
                 <i class="fa-regular fa-heart"></i>
               </div>
 
-              <div className="tw-text-white tw-text-xl">
+              <Link
+                to="/login"
+                className={classNames("tw-text-xl", {
+                  "!tw-text-white": lightMode,
+                  "!tw-text-[#212121]": !lightMode,
+                })}
+              >
                 <i class="fa-regular fa-user"></i>
-              </div>
+              </Link>
 
-              <Link to="/cart" className="tw-text-white tw-text-xl">
+              <Link
+                to="/cart"
+                className={classNames("tw-text-xl", {
+                  "!tw-text-white": lightMode,
+                  "!tw-text-[#212121]": !lightMode,
+                })}
+              >
                 <i class="fa-solid fa-cart-shopping"></i>
               </Link>
             </div>
