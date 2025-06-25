@@ -14,6 +14,7 @@ import Register from "./pages/client/Register/Register";
 import Products from "./pages/client/Products/Products";
 import ProductDetail from "./pages/client/ProductDetail/ProductDetail";
 import Cart from "./pages/client/Cart/Cart";
+import Checkout from "./pages/client/Checkout/Checkout";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -69,6 +70,10 @@ const App = () => {
             {
               path: "cart",
               element: <Cart />,
+            },
+            {
+              path: "checkout",
+              element: <Checkout />,
             },
           ],
         },
