@@ -1,6 +1,7 @@
 import React from "react";
-import ClientHeader from "../../layouts/MainLayout/ClientHeader";
+import ClientHeader from "../../../layouts/MainLayout/ClientHeader";
 import { Link } from "react-router-dom";
+import { Checkbox } from "antd";
 
 const Register = () => {
   return (
@@ -86,19 +87,19 @@ const Register = () => {
             </div>
 
             <div className="tw-flex tw-items-center tw-gap-x-2">
-              <input type="checkbox" name="" id="remember" />
-
-              <label for="remember" className="tw-text-[#1A1C20] tw-m-0">
-                Đồng ý với{" "}
-                <Link className="tw-text-[#99CCD0] tw-underline">
-                  điều khoản
-                </Link>{" "}
-                và{" "}
-                <Link className="tw-text-[#99CCD0] tw-underline">
-                  điều kiện
-                </Link>{" "}
-                của chúng tôi
-              </label>
+              <Checkbox>
+                <p className="tw-text-[#1A1C20] tw-m-0">
+                  Đồng ý với{" "}
+                  <Link className="tw-text-[#99CCD0] tw-underline">
+                    điều khoản
+                  </Link>{" "}
+                  và{" "}
+                  <Link className="tw-text-[#99CCD0] tw-underline">
+                    điều kiện
+                  </Link>{" "}
+                  của chúng tôi
+                </p>
+              </Checkbox>
             </div>
 
             <input

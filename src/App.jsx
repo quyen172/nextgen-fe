@@ -9,8 +9,13 @@ import Services from "./pages/client/Services/Services";
 import Contact from "./pages/client/Contact/Contact";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard/Dashboard";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
+import Login from "./pages/client/Login/Login";
+import Register from "./pages/client/Register/Register";
+import Products from "./pages/client/Products/Products";
+import ProductDetail from "./pages/client/ProductDetail/ProductDetail";
+import Cart from "./pages/client/Cart/Cart";
+import Checkout from "./pages/client/Checkout/Checkout";
+import ThankYou from "./pages/client/ThankYou/ThankYou";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -54,6 +59,26 @@ const App = () => {
             {
               path: "register",
               element: <Register />,
+            },
+            {
+              path: "products",
+              element: <Products />,
+            },
+            {
+              path: "products/:id",
+              element: <ProductDetail />,
+            },
+            {
+              path: "cart",
+              element: <Cart />,
+            },
+            {
+              path: "checkout",
+              element: <Checkout />,
+            },
+            {
+              path: "thank-you",
+              element: <ThankYou />,
             },
           ],
         },
