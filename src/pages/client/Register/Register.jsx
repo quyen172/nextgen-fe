@@ -1,14 +1,14 @@
 import React from "react";
-import ClientHeader from "../../layouts/MainLayout/ClientHeader";
+import ClientHeader from "../../../layouts/MainLayout/ClientHeader";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   return (
     <>
       <ClientHeader lightMode={false} />
 
       <main className="tw-min-h-[80vh] tw-pt-24 container">
-        <div className="tw-my-6">
+        <div className="tw-mt-6 tw-mb-24">
           <div className="tw-flex tw-items-center tw-gap-5">
             <Link to="/" className="tw-text-[#9E9E9E]">
               Trang chủ
@@ -18,7 +18,7 @@ const Login = () => {
               <i className="fa-solid fa-chevron-right"></i>
             </div>
 
-            <p className="tw-text-[#1A1C20] tw-font-bold tw-m-0">Đăng nhập</p>
+            <p className="tw-text-[#1A1C20] tw-font-bold tw-m-0">Đăng ký</p>
           </div>
 
           <form
@@ -26,8 +26,22 @@ const Login = () => {
             className="tw-w-[600px] tw-max-w-full tw-mx-auto tw-mt-24"
           >
             <h1 className="tw-text-center tw-text-5xl tw-font-bold tw-mb-6">
-              Đăng nhập
+              Đăng ký
             </h1>
+
+            <div className="row form-group">
+              <div className="col-md-12 mb-3 mb-md-0">
+                <label className="font-weight-bold" htmlFor="phone">
+                  Họ và tên
+                </label>
+                <input
+                  type="text"
+                  id="phone"
+                  className="form-control"
+                  placeholder="0983983983"
+                />
+              </div>
+            </div>
 
             <div className="row form-group">
               <div className="col-md-12 mb-3 mb-md-0">
@@ -57,30 +71,46 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="tw-flex tw-items-center tw-justify-between">
-              <div className="tw-flex tw-items-center tw-gap-x-2">
-                <input type="checkbox" name="" id="remember" />
-
-                <label for="remember" className="tw-text-[#1A1C20] tw-m-0">
-                  Ghi nhớ mật khẩu
+            <div className="row form-group">
+              <div className="col-md-12 tw-mb-3 mb-md-0">
+                <label className="font-weight-bold" htmlFor="password">
+                  Nhập lại mật khẩu
                 </label>
+                <input
+                  type="password"
+                  id="phone"
+                  className="form-control"
+                  placeholder="0983983983"
+                />
               </div>
+            </div>
 
-              <Link className="tw-text-[#99CCD0] tw-underline">
-                Quên mật khẩu?
-              </Link>
+            <div className="tw-flex tw-items-center tw-gap-x-2">
+              <input type="checkbox" name="" id="remember" />
+
+              <label for="remember" className="tw-text-[#1A1C20] tw-m-0">
+                Đồng ý với{" "}
+                <Link className="tw-text-[#99CCD0] tw-underline">
+                  điều khoản
+                </Link>{" "}
+                và{" "}
+                <Link className="tw-text-[#99CCD0] tw-underline">
+                  điều kiện
+                </Link>{" "}
+                của chúng tôi
+              </label>
             </div>
 
             <input
               type="submit"
-              value="Đăng nhập"
+              value="Đăng ký"
               className="btn btn-primary rounded-0 btn-lg tw-w-full tw-text-2xl tw-mt-6 tw-uppercase tw-font-semibold"
             />
 
             <p className="tw-text-center tw-mt-6">
-              Bạn chưa có tài khoản?{" "}
-              <Link to="/register" className="tw-text-[#99CCD0] tw-underline">
-                Đăng ký
+              Bạn đã có tài khoản?{" "}
+              <Link to="/login" className="tw-text-[#99CCD0] tw-underline">
+                Đăng nhập
               </Link>
             </p>
           </form>
@@ -90,4 +120,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

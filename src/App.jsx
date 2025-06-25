@@ -9,8 +9,9 @@ import Services from "./pages/client/Services/Services";
 import Contact from "./pages/client/Contact/Contact";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard/Dashboard";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
+import Login from "./pages/client/Login/Login";
+import Register from "./pages/client/Register/Register";
+import Products from "./pages/client/Products/Products";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -54,6 +55,10 @@ const App = () => {
             {
               path: "register",
               element: <Register />,
+            },
+            {
+              path: "products",
+              element: <Products />,
             },
           ],
         },
