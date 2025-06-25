@@ -12,6 +12,7 @@ import Dashboard from "./pages/admin/Dashboard/Dashboard";
 import Login from "./pages/client/Login/Login";
 import Register from "./pages/client/Register/Register";
 import Products from "./pages/client/Products/Products";
+import ProductDetail from "./pages/client/ProductDetail/ProductDetail";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -59,6 +60,10 @@ const App = () => {
             {
               path: "products",
               element: <Products />,
+            },
+            {
+              path: "products/:id",
+              element: <ProductDetail />,
             },
           ],
         },

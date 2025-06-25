@@ -18,7 +18,7 @@ const ProductItem = () => {
       </div>
 
       <div className="tw-mt-5 tw-flex tw-flex-col tw-items-center tw-gap-y-3">
-        <Link className="tw-text-center tw-line-clamp-1 tw-font-semibold tw-uppercase tw-text-[#212121]">
+        <Link className="tw-text-center tw-line-clamp-1 tw-font-semibold tw-text-[#212121]">
           Ghế Sofa MOHO HALDEN 801
         </Link>
 
