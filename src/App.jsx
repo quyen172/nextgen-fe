@@ -15,6 +15,7 @@ import Products from "./pages/client/Products/Products";
 import ProductDetail from "./pages/client/ProductDetail/ProductDetail";
 import Cart from "./pages/client/Cart/Cart";
 import Checkout from "./pages/client/Checkout/Checkout";
+import ThankYou from "./pages/client/ThankYou/ThankYou";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -74,6 +75,10 @@ const App = () => {
             {
               path: "checkout",
               element: <Checkout />,
+            },
+            {
+              path: "thank-you",
+              element: <ThankYou />,
             },
           ],
         },
