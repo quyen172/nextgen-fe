@@ -1,6 +1,7 @@
 import React from "react";
 import ClientHeader from "../../../layouts/MainLayout/ClientHeader";
 import { Link } from "react-router-dom";
+import { Checkbox } from "antd";
 
 const Login = () => {
   return (
@@ -59,11 +60,9 @@ const Login = () => {
 
             <div className="tw-flex tw-items-center tw-justify-between">
               <div className="tw-flex tw-items-center tw-gap-x-2">
-                <input type="checkbox" name="" id="remember" />
-
-                <label for="remember" className="tw-text-[#1A1C20] tw-m-0">
-                  Ghi nhớ mật khẩu
-                </label>
+                <Checkbox>
+                  <p className="tw-text-[#1A1C20] tw-m-0">Ghi nhớ mật khẩu</p>
+                </Checkbox>
               </div>
 
               <Link className="tw-text-[#99CCD0] tw-underline">
