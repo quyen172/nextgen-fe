@@ -2,8 +2,19 @@ import React from "react";
 import ClientHeader from "../../../layouts/MainLayout/ClientHeader";
 import { Link } from "react-router-dom";
 import { Checkbox } from "antd";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = () => {
+    // loginUser(data)...
+  };
+
   return (
     <>
       <ClientHeader lightMode={false} />
@@ -23,7 +34,7 @@ const Login = () => {
           </div>
 
           <form
-            action=""
+            onSubmit={handleSubmit(onSubmit)}
             className="tw-w-[600px] tw-max-w-full tw-mx-auto tw-mt-24"
           >
             <h1 className="tw-text-center tw-text-5xl tw-font-bold tw-mb-6">
@@ -32,35 +43,55 @@ const Login = () => {
 
             <div className="row form-group">
               <div className="col-md-12 mb-3 mb-md-0">
-                <label className="font-weight-bold" htmlFor="phone">
-                  Số điện thoại
+                <label className="font-weight-bold" htmlFor="login">
+                  Tên đăng nhập
                 </label>
                 <input
                   type="text"
-                  id="phone"
-                  className="form-control"
-                  placeholder="0983983983"
+                  id="login"
+                  className={`form-control ${errors.login ? "is-invalid" : ""}`}
+                  placeholder="username123"
+                  {...register("login", {
+                    required: "Tên đăng nhập không được để trống",
+                    minLength: {
+                      value: 4,
+                      message: "Tên đăng nhập phải có ít nhất 4 kí tự",
+                    },
+                  })}
                 />
+                {errors.login && (
+                  <div className="invalid-feedback">{errors.login.message}</div>
+                )}
               </div>
             </div>
 
             <div className="row form-group">
               <div className="col-md-12 tw-mb-3 mb-md-0">
-                <label className="font-weight-bold" htmlFor="password">
+                <label className="font-weight-bold" htmlFor="Password">
                   Mật khẩu
                 </label>
                 <input
                   type="password"
-                  id="phone"
-                  className="form-control"
-                  placeholder="0983983983"
+                  id="Password"
+                  className={`form-control ${
+                    errors.Password ? "is-invalid" : ""
+                  }`}
+                  placeholder="Nhập mật khẩu"
+                  {...register("Password", {
+                    required: "Mật khẩu không được để trống",
+                  })}
                 />
+                {errors.Password && (
+                  <div className="invalid-feedback">
+                    {errors.Password.message}
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="tw-flex tw-items-center tw-justify-between">
               <div className="tw-flex tw-items-center tw-gap-x-2">
-                <Checkbox>
+                <Checkbox {...register("rememberMe")}>
                   <p className="tw-text-[#1A1C20] tw-m-0">Ghi nhớ mật khẩu</p>
                 </Checkbox>
               </div>
