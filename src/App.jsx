@@ -17,6 +17,8 @@ import Cart from "./pages/client/Cart/Cart";
 import Checkout from "./pages/client/Checkout/Checkout";
 import ThankYou from "./pages/client/ThankYou/ThankYou";
 import VerifyEmail from "./pages/client/VerifyEmail/VerifyEmail";
+import ForgotPassword from "./pages/client/ForgotPassword/ForgotPassword";
+import ResetPassword from "./pages/client/ResetPassword/ResetPassword";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -64,6 +66,14 @@ const App = () => {
             {
               path: "verify-email",
               element: <VerifyEmail />,
+            },
+            {
+              path: "forgot-password",
+              element: <ForgotPassword />,
+            },
+            {
+              path: "reset-password",
+              element: <ResetPassword />,
             },
             {
               path: "products",
