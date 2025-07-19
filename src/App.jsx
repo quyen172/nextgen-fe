@@ -16,6 +16,7 @@ import ProductDetail from "./pages/client/ProductDetail/ProductDetail";
 import Cart from "./pages/client/Cart/Cart";
 import Checkout from "./pages/client/Checkout/Checkout";
 import ThankYou from "./pages/client/ThankYou/ThankYou";
+import VerifyEmail from "./pages/client/VerifyEmail/VerifyEmail";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -59,6 +60,10 @@ const App = () => {
             {
               path: "register",
               element: <Register />,
+            },
+            {
+              path: "verify-email",
+              element: <VerifyEmail />,
             },
             {
               path: "products",
