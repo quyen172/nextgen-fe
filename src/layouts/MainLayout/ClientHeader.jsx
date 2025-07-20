@@ -153,38 +153,50 @@ const ClientHeader = ({ lightMode = true }) => {
             </ul>
 
             <div className="tw-flex tw-items-center tw-gap-6">
-              <div
-                className={classNames("tw-text-xl", {
-                  "!tw-text-white": lightMode,
-                  "!tw-text-[#212121]": !lightMode,
-                })}
-              >
-                <Link to={user ? "/favorites" : "/login"}>
-                  <HeartOutlined className="tw-text-xl" />
-                </Link>
-              </div>
-
               {user ? (
-                <Dropdown overlay={userMenu} placement="bottomRight" arrow>
+                <>
                   <div
-                    className={classNames(
-                      "tw-flex tw-items-center tw-gap-2 tw-cursor-pointer",
-                      {
-                        "!tw-text-white": lightMode,
-                        "!tw-text-[#212121]": !lightMode,
-                      }
-                    )}
+                    className={classNames("tw-text-xl", {
+                      "!tw-text-white": lightMode,
+                      "!tw-text-[#212121]": !lightMode,
+                    })}
                   >
-                    <span className="tw-text-base tw-font-medium tw-hidden md:tw-block">
-                      {user.Fullname || user.Username}
-                    </span>
-                    <div className="tw-w-8 tw-h-8 tw-bg-[#99CCD0] tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-white">
-                      {(user.Fullname || user.Username || "U")
-                        .charAt(0)
-                        .toUpperCase()}
-                    </div>
+                    <Link to="/favorites">
+                      <HeartOutlined className="tw-text-xl" />
+                    </Link>
                   </div>
-                </Dropdown>
+
+                  <Dropdown overlay={userMenu} placement="bottomRight" arrow>
+                    <div
+                      className={classNames(
+                        "tw-flex tw-items-center tw-gap-2 tw-cursor-pointer",
+                        {
+                          "!tw-text-white": lightMode,
+                          "!tw-text-[#212121]": !lightMode,
+                        }
+                      )}
+                    >
+                      <span className="tw-text-base tw-font-medium tw-hidden md:tw-block">
+                        {user.Fullname || user.Username}
+                      </span>
+                      <div className="tw-w-8 tw-h-8 tw-bg-[#99CCD0] tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-white">
+                        {(user.Fullname || user.Username || "U")
+                          .charAt(0)
+                          .toUpperCase()}
+                      </div>
+                    </div>
+                  </Dropdown>
+
+                  <Link
+                    to="/cart"
+                    className={classNames("tw-text-xl", {
+                      "!tw-text-white": lightMode,
+                      "!tw-text-[#212121]": !lightMode,
+                    })}
+                  >
+                    <ShoppingCartOutlined />
+                  </Link>
+                </>
               ) : (
                 <Link
                   to="/login"
@@ -196,16 +208,6 @@ const ClientHeader = ({ lightMode = true }) => {
                   <UserOutlined />
                 </Link>
               )}
-
-              <Link
-                to="/cart"
-                className={classNames("tw-text-xl", {
-                  "!tw-text-white": lightMode,
-                  "!tw-text-[#212121]": !lightMode,
-                })}
-              >
-                <ShoppingCartOutlined />
-              </Link>
             </div>
           </div>
         </div>
