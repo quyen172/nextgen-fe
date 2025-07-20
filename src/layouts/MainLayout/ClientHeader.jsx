@@ -103,8 +103,8 @@ const ClientHeader = ({ lightMode = true }) => {
               )}
             >
               <li>
-                <NavLink className="!tw-text-[inherit]" to="/">
-                  Home
+                <NavLink className="!tw-text-[inherit]" to="/products">
+                  Products
                 </NavLink>
               </li>
               <li>
