@@ -1,5 +1,6 @@
 import { Radio, Slider, Spin } from "antd";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import ClientHeader from "../../../layouts/MainLayout/ClientHeader";
 import { formatPrice } from "../../../utils/formatPrice";
 import ProductItem from "../../../components/ProductItem/ProductItem";
@@ -26,6 +27,7 @@ const fetchCategories = async () => {
 };
 
 const Products = () => {
+  const location = useLocation();
   const [priceRange, setPriceRange] = useState([0, 100000000]);
   // const [selectedColor, setSelectedColor] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -35,6 +37,18 @@ const Products = () => {
     sortBy: "newest",
     query: "",
   });
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const query = searchParams.get("q");
+
+    if (query) {
+      setFilters((prev) => ({
+        ...prev,
+        query: query,
+      }));
+    }
+  }, [location.search]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["products", filters],
@@ -92,39 +106,16 @@ const Products = () => {
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
+
     setFilters((prev) => ({
       ...prev,
       category: categoryId,
     }));
   };
 
-  // const handleColorChange = (e) => {
-  //   setSelectedColor(e.target.value);
-  // };
-
-  // const handleSortChange = (value) => {
-  //   let sortByValue = "newest";
-
-  //   switch (value) {
-  //     case "Mới nhất":
-  //       sortByValue = "newest";
-  //       break;
-  //     case "Bán chạy":
-  //       sortByValue = "bestseller";
-  //       break;
-  //     case "Giá thấp":
-  //       sortByValue = "price_asc";
-  //       break;
-  //     case "Giá cao":
-  //       sortByValue = "price_desc";
-  //       break;
-  //   }
-
-  //   setFilters((prev) => ({
-  //     ...prev,
-  //     sortBy: sortByValue,
-  //   }));
-  // };
+  const searchTitle = filters.query
+    ? `Kết quả tìm kiếm cho "${filters.query}"`
+    : "Products";
 
   return (
     <>
@@ -139,7 +130,7 @@ const Products = () => {
         <div className="container">
           <div className="row align-items-end">
             <div className="col-md-12">
-              <h1 className="tw-text-center tw-mb-36">Products</h1>
+              <h1 className="tw-text-center tw-mb-36">{searchTitle}</h1>
             </div>
           </div>
         </div>
@@ -222,139 +213,6 @@ const Products = () => {
                   </span>
                 </p>
               </section>
-
-              {/* <hr className="tw-my-8 tw-bg-[#EEEEEE]" />
-
-              <section>
-                <h3 className="tw-text-[#212121] tw-font-bold tw-text-xl tw-mb-4">
-                  Chất liệu
-                </h3>
-
-                <div className="tw-flex tw-flex-col tw-gap-3">
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Checkbox className="tw-text-[#212121] tw-text-base">
-                      Ceramic
-                    </Checkbox>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Checkbox className="tw-text-[#212121] tw-text-base">
-                      Ceramic
-                    </Checkbox>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Checkbox className="tw-text-[#212121] tw-text-base">
-                      Ceramic
-                    </Checkbox>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-                </div>
-              </section> */}
-
-              {/* <hr className="tw-my-8 tw-bg-[#EEEEEE]" />
-
-              <section>
-                <h3 className="tw-text-[#212121] tw-font-bold tw-text-xl tw-mb-4">
-                  Màu sắc
-                </h3>
-
-                <Radio.Group
-                  value={selectedColor}
-                  onChange={handleColorChange}
-                  className="tw-flex tw-flex-col tw-gap-3"
-                >
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Radio
-                      value="xanh"
-                      className="tw-text-[#212121] tw-text-base"
-                    >
-                      Xanh
-                    </Radio>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Radio
-                      value="do"
-                      className="tw-text-[#212121] tw-text-base"
-                    >
-                      Đỏ
-                    </Radio>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Radio
-                      value="vang"
-                      className="tw-text-[#212121] tw-text-base"
-                    >
-                      Vàng
-                    </Radio>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-                </Radio.Group>
-              </section> */}
-
-              {/* <hr className="tw-my-8 tw-bg-[#EEEEEE]" />
-
-              <section>
-                <h3 className="tw-text-[#212121] tw-font-bold tw-text-xl tw-mb-4">
-                  Kích thước
-                </h3>
-
-                <div className="tw-flex tw-flex-col tw-gap-3">
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Checkbox className="tw-text-[#212121] tw-text-base">
-                      1m2
-                    </Checkbox>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Checkbox className="tw-text-[#212121] tw-text-base">
-                      1m4
-                    </Checkbox>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-
-                  <div className="tw-flex tw-items-center tw-justify-between">
-                    <Checkbox className="tw-text-[#212121] tw-text-base">
-                      1m6
-                    </Checkbox>
-
-                    <p className="tw-m-0 tw-border tw-border-solid tw-border-[#999] tw-rounded-xl tw-text-xs tw-text-[#999] tw-min-w-6 tw-flex tw-justify-center tw-px-1">
-                      10
-                    </p>
-                  </div>
-                </div>
-              </section> */}
             </div>
 
             <div className="tw-col-span-9">
@@ -363,18 +221,6 @@ const Products = () => {
                   Hiển thị {products.length} sản phẩm, trong số {productsCount}{" "}
                   sản phẩm
                 </p>
-
-                {/* <Select
-                  defaultValue="Mới nhất"
-                  onChange={handleSortChange}
-                  options={[
-                    { value: "Mới nhất", label: "Mới nhất" },
-                    { value: "Bán chạy", label: "Bán chạy" },
-                    { value: "Giá thấp", label: "Giá thấp" },
-                    { value: "Giá cao", label: "Giá cao" },
-                  ]}
-                  className="tw-w-40"
-                /> */}
               </div>
 
               <div className="tw-mt-4 tw-grid tw-grid-cols-3 tw-gap-6">
@@ -388,7 +234,9 @@ const Products = () => {
                   ))
                 ) : (
                   <div className="tw-col-span-3 tw-text-center tw-py-12 tw-text-[#666]">
-                    Không tìm thấy sản phẩm nào
+                    {filters.query
+                      ? `Không tìm thấy sản phẩm nào phù hợp với "${filters.query}"`
+                      : "Không tìm thấy sản phẩm nào"}
                   </div>
                 )}
               </div>

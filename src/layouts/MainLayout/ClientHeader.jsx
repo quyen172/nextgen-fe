@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { useState, useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Dropdown, Menu, message } from "antd";
 import {
   UserOutlined,
@@ -11,7 +11,9 @@ import {
 
 const ClientHeader = ({ lightMode = true }) => {
   const [user, setUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -22,7 +24,15 @@ const ClientHeader = ({ lightMode = true }) => {
         console.error("Error parsing user data:", error);
       }
     }
-  }, []);
+
+    if (location.pathname === "/products") {
+      const searchParams = new URLSearchParams(location.search);
+      const query = searchParams.get("q");
+      if (query) {
+        setSearchQuery(query);
+      }
+    }
+  }, [location]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -30,6 +40,13 @@ const ClientHeader = ({ lightMode = true }) => {
     setUser(null);
     message.success("Đăng xuất thành công");
     navigate("/login");
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
   };
 
   const userMenu = (
@@ -68,12 +85,14 @@ const ClientHeader = ({ lightMode = true }) => {
             </Link>
 
             <form
-              action=""
+              onSubmit={handleSearch}
               className="tw-w-[300px] tw-h-12 tw-border tw-border-solid tw-border-[#BDBDBD] tw-flex"
             >
               <input
                 type="text"
                 placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className={classNames(
                   "tw-bg-transparent tw-border-none tw-outline-none tw-flex-1 tw-px-2 [&::placeholder]:tw-text-gray-[#BDBDBD]",
                   {
@@ -83,14 +102,18 @@ const ClientHeader = ({ lightMode = true }) => {
                 )}
               />
 
-              <div
-                className={classNames("tw-self-center tw-mx-4", {
-                  "!tw-text-white": lightMode,
-                  "!tw-text-[#212121]": !lightMode,
-                })}
+              <button
+                type="submit"
+                className={classNames(
+                  "tw-self-center tw-mx-4 tw-bg-transparent tw-border-none tw-cursor-pointer",
+                  {
+                    "!tw-text-white": lightMode,
+                    "!tw-text-[#212121]": !lightMode,
+                  }
+                )}
               >
                 <i className="fa-solid fa-magnifying-glass"></i>
-              </div>
+              </button>
             </form>
 
             <ul
