@@ -20,6 +20,7 @@ import VerifyEmail from "./pages/client/VerifyEmail/VerifyEmail";
 import ForgotPassword from "./pages/client/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/client/ResetPassword/ResetPassword";
 import Favorites from "./pages/client/Favorites/Favorites";
+import HomeV2 from "./pages/client/HomeV2/HomeV2";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -34,7 +35,7 @@ const App = () => {
           children: [
             {
               path: "",
-              element: <Home />,
+              element: <HomeV2 />,
             },
             {
               path: "about",
