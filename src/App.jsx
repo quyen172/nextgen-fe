@@ -19,6 +19,7 @@ import ThankYou from "./pages/client/ThankYou/ThankYou";
 import VerifyEmail from "./pages/client/VerifyEmail/VerifyEmail";
 import ForgotPassword from "./pages/client/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/client/ResetPassword/ResetPassword";
+import Favorites from "./pages/client/Favorites/Favorites";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -94,6 +95,10 @@ const App = () => {
             {
               path: "thank-you",
               element: <ThankYou />,
+            },
+            {
+              path: "favorites",
+              element: <Favorites />,
             },
           ],
         },

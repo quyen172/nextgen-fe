@@ -3,9 +3,11 @@ import ClientHeader from "../../../layouts/MainLayout/ClientHeader";
 import { Link, useParams } from "react-router-dom";
 import { formatPrice } from "../../../utils/formatPrice";
 import ProductItem from "../../../components/ProductItem/ProductItem";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "../../../api/api";
 import { getProductImageUrl } from "../../../utils/formatImage";
+import { favoriteApi } from "../../../api/favoriteApi";
+import { message } from "antd";
 
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
@@ -15,6 +17,15 @@ const ProductDetail = () => {
   const [noMatchingVariant, setNoMatchingVariant] = useState(false);
 
   const { id } = useParams();
+  const queryClient = useQueryClient();
+
+  const getUserInfo = () => {
+    const userStr = localStorage.getItem("user");
+    return userStr ? JSON.parse(userStr) : null;
+  };
+
+  const user = getUserInfo();
+  const userId = user?.UserID;
 
   const { data: product, isLoading } = useQuery({
     queryKey: ["product", id],
@@ -44,6 +55,56 @@ const ProductDetail = () => {
     queryFn: async () => {
       const response = await apiClient.get("/api/products");
       return response.data.data;
+    },
+  });
+
+  const { data: favorites = [] } = useQuery({
+    queryKey: ["favorites", userId],
+    queryFn: () => favoriteApi.getFavorites(userId),
+    enabled: !!userId,
+    select: (data) => data.data || [],
+  });
+
+  const defaultVariant =
+    product?.variants && product.variants.length > 0
+      ? product.variants[0]
+      : null;
+
+  const isFavorite = favorites.some(
+    (fav) =>
+      fav.ProductVariantID === defaultVariant?.ProductVariantID ||
+      fav.productVariant?.ProductVariantID === defaultVariant?.ProductVariantID
+  );
+
+  const addToFavoritesMutation = useMutation({
+    mutationFn: favoriteApi.addToFavorites,
+    onSuccess: () => {
+      message.success("Đã thêm vào danh sách yêu thích!");
+      queryClient.invalidateQueries(["favorites", userId]);
+    },
+    onError: (error) => {
+      console.error("Lỗi khi thêm vào yêu thích:", error);
+      if (error.response?.data?.message) {
+        message.error(error.response.data.message);
+      } else {
+        message.error("Có lỗi xảy ra khi thêm vào danh sách yêu thích.");
+      }
+    },
+  });
+
+  const removeFromFavoritesMutation = useMutation({
+    mutationFn: favoriteApi.removeFromFavorites,
+    onSuccess: () => {
+      message.success("Đã xóa khỏi danh sách yêu thích!");
+      queryClient.invalidateQueries(["favorites", userId]);
+    },
+    onError: (error) => {
+      console.error("Lỗi khi xóa khỏi yêu thích:", error);
+      if (error.response?.data?.message) {
+        message.error(error.response.data.message);
+      } else {
+        message.error("Có lỗi xảy ra khi xóa khỏi danh sách yêu thích.");
+      }
     },
   });
 
@@ -141,6 +202,30 @@ const ProductDetail = () => {
       return;
     }
     alert(`Added ${quantity} items to cart`);
+  };
+
+  const handleToggleFavorite = () => {
+    const token = localStorage.getItem("token");
+    if (!token || !userId) {
+      message.error("Vui lòng đăng nhập để sử dụng tính năng yêu thích!");
+      return;
+    }
+
+    if (!defaultVariant) {
+      message.error("Sản phẩm không có biến thể");
+      return;
+    }
+
+    const favoriteData = {
+      UserID: userId,
+      ProductVariantID: defaultVariant.ProductVariantID,
+    };
+
+    if (isFavorite) {
+      removeFromFavoritesMutation.mutate(favoriteData);
+    } else {
+      addToFavoritesMutation.mutate(favoriteData);
+    }
   };
 
   if (isLoading)
@@ -351,6 +436,24 @@ const ProductDetail = () => {
                 onClick={addToCart}
               >
                 Thêm vào giỏ hàng
+              </button>
+
+              <button
+                onClick={handleToggleFavorite}
+                disabled={
+                  addToFavoritesMutation.isPending ||
+                  removeFromFavoritesMutation.isPending
+                }
+                className="tw-ml-3 tw-w-12 tw-h-12 tw-bg-white tw-border tw-border-solid tw-border-[#E0E0E0] tw-cursor-pointer hover:tw-border-[#99CCD0] tw-transition-all tw-flex tw-items-center tw-justify-center disabled:tw-opacity-50 disabled:tw-cursor-not-allowed"
+                title={isFavorite ? "Xóa khỏi yêu thích" : "Thêm vào yêu thích"}
+              >
+                <i
+                  className={`fa-heart tw-text-base ${
+                    isFavorite
+                      ? "fas tw-text-red-500"
+                      : "far tw-text-gray-400 hover:tw-text-red-500"
+                  } tw-transition-colors`}
+                ></i>
               </button>
             </section>
 

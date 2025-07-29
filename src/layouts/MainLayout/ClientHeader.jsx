@@ -8,12 +8,25 @@ import {
   HeartOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
+import { useQuery } from "@tanstack/react-query";
+import { favoriteApi } from "../../api/favoriteApi";
 
 const ClientHeader = ({ lightMode = true }) => {
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+
+  const userId = user?.UserID;
+
+  const { data: favorites = [] } = useQuery({
+    queryKey: ["favorites", userId],
+    queryFn: () => favoriteApi.getFavorites(userId),
+    enabled: !!userId,
+    select: (data) => data.data || [],
+  });
+
+  const favoriteCount = favorites.length;
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -156,13 +169,23 @@ const ClientHeader = ({ lightMode = true }) => {
               {user ? (
                 <>
                   <div
-                    className={classNames("tw-text-xl", {
+                    className={classNames("tw-relative tw-text-xl", {
                       "!tw-text-white": lightMode,
                       "!tw-text-[#212121]": !lightMode,
                     })}
                   >
                     <Link to="/favorites">
-                      <HeartOutlined className="tw-text-xl" />
+                      <HeartOutlined
+                        className={classNames("tw-text-xl", {
+                          "!tw-text-white": lightMode,
+                          "!tw-text-[#212121]": !lightMode,
+                        })}
+                      />
+                      {favoriteCount > 0 && (
+                        <span className="tw-absolute -tw-top-2 -tw-right-2 tw-bg-red-500 tw-text-white tw-text-xs tw-rounded-full tw-min-w-[18px] tw-h-[18px] tw-flex tw-items-center tw-justify-center tw-font-medium">
+                          {favoriteCount > 99 ? "99+" : favoriteCount}
+                        </span>
+                      )}
                     </Link>
                   </div>
 
